@@ -46,6 +46,23 @@ def goforward():
     GPIO.output(Motor1E, GPIO.LOW)
     GPIO.output(Motor2E, GPIO.LOW)
 
+def backwards():
+    # print("Going forwards")
+    GPIO.output(Motor1A, GPIO.LOW)
+    GPIO.output(Motor1B, GPIO.HIGH)
+    GPIO.output(Motor1E, GPIO.HIGH)
+
+    GPIO.output(Motor2A, GPIO.LOW)
+    GPIO.output(Motor2B, GPIO.HIGH)
+    GPIO.output(Motor2E, GPIO.HIGH)
+
+    sleep(1)
+    # print("Now stop")
+    GPIO.output(Motor1E, GPIO.LOW)
+    GPIO.output(Motor2E, GPIO.LOW)
+
+
+
 
 def turn():
     #print("Going left")
@@ -66,6 +83,25 @@ def turn1():
     sleep(1)
     #print("Now stop")
     GPIO.output(Motor1E, GPIO.LOW)
+
+
+def doubleturn():
+    # print("Going forwards")
+    GPIO.output(Motor1A, GPIO.LOW)
+    GPIO.output(Motor1B, GPIO.HIGH)
+    GPIO.output(Motor1E, GPIO.HIGH)
+    sleep(1)
+    GPIO.output(Motor1E, GPIO.LOW)
+
+    GPIO.output(Motor2A, GPIO.HIGH)
+    GPIO.output(Motor2B, GPIO.LOW)
+    GPIO.output(Motor2E, GPIO.HIGH)
+
+    sleep(1)
+    # print("Now stop")
+
+    GPIO.output(Motor2E, GPIO.LOW)
+
 
 
 
@@ -115,25 +151,28 @@ if __name__ == '__main__':
         while True:
             a = raw_input()
             if(a == "w"):
-                abstandok()
                 goforward()
                 distance()
             if(a == "a"):
-                abstandok()
                 turn()
                 distance()
             if(a == "d"):
-                abstandok()
                 turn1()
                 distance()
+            if(a == "s"):
+                backwards()
+                distance()
             if(a == "p"):
-                abstandok()
                 distance()
                 stop()
-
                 break
+            if(a == "e"):
+                doubleturn()
+                distance()
+
+
 
         # Beim Abbruch durch STRG+C resetten
     except KeyboardInterrupt:
-        print("Messung vom User gestoppt")
+        print("")
         GPIO.cleanup()
